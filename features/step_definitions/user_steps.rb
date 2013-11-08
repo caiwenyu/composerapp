@@ -132,6 +132,7 @@ When /^I look at the list of users$/ do
   visit '/'
 end
 
+
 ### THEN ###
 Then /^I should be signed in$/ do
   page.should have_content "Logout"
