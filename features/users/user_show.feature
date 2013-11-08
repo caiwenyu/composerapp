@@ -1,9 +1,7 @@
 Feature: Show Users
-  As a visitor to the website
-  I want to see registered users listed on the homepage
-  so I can know if the site has users
+  查看用户列表
 
-    Scenario: Viewing users
-      Given I exist as a user
-      When I look at the list of users
-      Then I should see my name
+    Scenario: 查看用户列表
+      Given 我是注册用户
+      When 我查看用户列表
+      Then 我应该看到我的名字

@@ -1,27 +1,25 @@
 Feature: Sign up
-  In order to get access to protected sections of the site
-  As a user
-  I want to be able to sign up
+  用户注册
 
     Background:
-      Given I am not logged in
+      Given 我没有登录
 
-    Scenario: User signs up with valid data
-      When I sign up with valid user data
-      Then I should see a successful sign up message
+    Scenario: 用户使用有效数据注册
+      When 我使用有效的用户数据注册
+      Then 我看到登录成功通知
       
-    Scenario: User signs up with invalid email
-      When I sign up with an invalid email
-      Then I should see an invalid email message
+    Scenario: 用户使用无效Email地址注册
+      When 我使用无效Email地址注册
+      Then 我看到Email无效的消息通知
 
-    Scenario: User signs up without password
-      When I sign up without a password
-      Then I should see a missing password message
+    Scenario: 用户注册没有输入密码
+      When 我注册时没有输入密码
+      Then 我看到密码空白的消息通知
 
-    Scenario: User signs up without password confirmation
-      When I sign up without a password confirmation
-      Then I should see a missing password confirmation message
+    Scenario: 用户注册没有输入确认密码
+      When 我注册时没有输入确定密码
+      Then 我看到两次输入密码不匹配的消息通知
 
-    Scenario: User signs up with mismatched password and confirmation
-      When I sign up with a mismatched password confirmation
-      Then I should see a mismatched password message
+    Scenario: 用户注册没有输入不同的确认密码
+      When 我注册时两次输入密码不同
+      Then 我看到两次输入密码不匹配的消息通知

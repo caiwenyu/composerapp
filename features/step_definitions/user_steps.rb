@@ -23,7 +23,7 @@ def create_user
 end
 
 def delete_user
-  @user ||= User.first conditions: {:email => @visitor[:email]}
+  @user ||= User.find_by email: @visitor[:email]
   @user.destroy unless @user.nil?
 end
 
@@ -46,20 +46,20 @@ def sign_in
 end
 
 ### GIVEN ###
-Given /^I am not logged in$/ do
+Given /^我没有登录$/ do
   visit '/users/sign_out'
 end
 
-Given /^I am logged in$/ do
+Given /^我已经登录$/ do
   create_user
   sign_in
 end
 
-Given /^I exist as a user$/ do
+Given /^我是注册用户$/ do
   create_user
 end
 
-Given /^I do not exist as a user$/ do
+Given /^我不是注册用户/ do
   create_visitor
   delete_user
 end
@@ -69,124 +69,121 @@ Given /^I exist as an unconfirmed user$/ do
 end
 
 ### WHEN ###
-When /^I sign in with valid credentials$/ do
+When /^我用有效信息直接登录$/ do
   create_visitor
   sign_in
 end
 
-When /^I sign out$/ do
+When /^我选择退出$/ do
   visit '/users/sign_out'
 end
 
-When /^I sign up with valid user data$/ do
+When /^我使用有效的用户数据注册$/ do
   create_visitor
   sign_up
 end
 
-When /^I sign up with an invalid email$/ do
+When /^我使用无效Email地址注册$/ do
   create_visitor
   @visitor = @visitor.merge(:email => "notanemail")
   sign_up
 end
 
-When /^I sign up without a password confirmation$/ do
+When /^我注册时没有输入确定密码$/ do
   create_visitor
   @visitor = @visitor.merge(:password_confirmation => "")
   sign_up
 end
 
-When /^I sign up without a password$/ do
+When /^我注册时没有输入密码$/ do
   create_visitor
   @visitor = @visitor.merge(:password => "")
   sign_up
 end
 
-When /^I sign up with a mismatched password confirmation$/ do
+When /^我注册时两次输入密码不同$/ do
   create_visitor
   @visitor = @visitor.merge(:password_confirmation => "changeme123")
   sign_up
 end
 
-When /^I return to the site$/ do
+When /^我返回到主页$/ do
   visit '/'
 end
 
-When /^I sign in with a wrong email$/ do
+When /^我用错误的Email登录$/ do
   @visitor = @visitor.merge(:email => "wrong@example.com")
   sign_in
 end
 
-When /^I sign in with a wrong password$/ do
+When /^我用错误的密码登录$/ do
   @visitor = @visitor.merge(:password => "wrongpass")
   sign_in
 end
 
-When /^I edit my account details$/ do
-  click_link "Edit account"
+When /^我更改我的帐户信息$/ do
+  click_link "帐户信息"
+  click_link "修改信息"
   fill_in "Name", :with => "newname"
   fill_in "user_current_password", :with => @visitor[:password]
   click_button "Update"
 end
 
-When /^I look at the list of users$/ do
+When /^我查看用户列表$/ do
   visit '/'
 end
 
 
 ### THEN ###
-Then /^I should be signed in$/ do
-  page.should have_content "Logout"
-  page.should_not have_content "Sign up"
-  page.should_not have_content "Login"
+Then /^我应该已经登录$/ do
+  page.should have_content "退出"
+  page.should_not have_content "注册"
+  page.should_not have_content "登录"
 end
 
-Then /^I should be signed out$/ do
-  page.should have_content "Sign up"
-  page.should have_content "Login"
-  page.should_not have_content "Logout"
+Then /^我应该没有登录$/ do
+#  page.should have_content "退出"
+  page.should have_content "登录"
+#  page.should_not have_content "退出"
 end
 
 Then /^I see an unconfirmed account message$/ do
   page.should have_content "You have to confirm your account before continuing."
 end
 
-Then /^I see a successful sign in message$/ do
+Then /^我看到登录有效通知$/ do
   page.should have_content "Signed in successfully."
 end
 
-Then /^I should see a successful sign up message$/ do
+Then /^我看到登录成功通知$/ do
   page.should have_content "Welcome! You have signed up successfully."
 end
 
-Then /^I should see an invalid email message$/ do
+Then /^我看到Email无效的消息通知$/ do
   page.should have_content "Emailis invalid"
 end
 
-Then /^I should see a missing password message$/ do
+Then /^我看到密码空白的消息通知$/ do
   page.should have_content "Passwordcan't be blank"
 end
 
-Then /^I should see a missing password confirmation message$/ do
+Then /^我看到两次输入密码不匹配的消息通知$/ do
   page.should have_content "Passworddoesn't match confirmation"
 end
 
-Then /^I should see a mismatched password message$/ do
-  page.should have_content "Passworddoesn't match confirmation"
-end
-
-Then /^I should see a signed out message$/ do
+Then /^我看到退出成功通知$$/ do
   page.should have_content "Signed out successfully."
 end
 
-Then /^I see an invalid login message$/ do
+Then /^我看到登录无效通知$/ do
   page.should have_content "Invalid email or password."
 end
 
-Then /^I should see an account edited message$/ do
+Then /^我看更改成功的消息通知$/ do
   page.should have_content "You updated your account successfully."
 end
 
-Then /^I should see my name$/ do
+Then /^我应该看到我的名字$/ do
   create_user
   page.should have_content @user[:name]
 end

@@ -1,9 +1,7 @@
 Feature: Edit User
-  As a registered user of the website
-  I want to edit my user profile
-  so I can change my username
+  用户帐户管理
 
-    Scenario: I sign in and edit my account
-      Given I am logged in
-      When I edit my account details
-      Then I should see an account edited message
+    Scenario: 用户登录管理帐户
+      Given 我已经登录
+      When 我更改我的帐户信息
+      Then 我看更改成功的消息通知

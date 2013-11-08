@@ -1,11 +1,9 @@
 Feature: Sign out
-  To protect my account from unauthorized access
-  A signed in user
-  Should be able to sign out
+  用户退出
 
-    Scenario: User signs out
-      Given I am logged in
-      When I sign out
-      Then I should see a signed out message
-      When I return to the site
-      Then I should be signed out
+    Scenario: 用户退出
+      Given 我已经登录
+      When 我选择退出
+      Then 我看到退出成功通知
+      When 我返回到主页
+      Then 我应该没有登录
