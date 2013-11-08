@@ -6,7 +6,7 @@ def create_visitor
 end
 
 def find_user
-  @user ||= User.first conditions: {:email => @visitor[:email]}
+  @user ||= User.where(email: @visitor[:email]).first
 end
 
 def create_unconfirmed_user
@@ -152,35 +152,35 @@ Then /^I see an unconfirmed account message$/ do
 end
 
 Then /^我看到登录有效通知$/ do
-  page.should have_content "Signed in successfully."
+  page.should have_content "登录成功."
 end
 
 Then /^我看到登录成功通知$/ do
-  page.should have_content "Welcome! You have signed up successfully."
+  page.should have_content "欢迎您！您已注册成功."
 end
 
 Then /^我看到Email无效的消息通知$/ do
-  page.should have_content "Emailis invalid"
+  page.should have_content "是无效的"
 end
 
 Then /^我看到密码空白的消息通知$/ do
-  page.should have_content "Passwordcan't be blank"
+  page.should have_content "不能为空字符"
 end
 
 Then /^我看到两次输入密码不匹配的消息通知$/ do
-  page.should have_content "Passworddoesn't match confirmation"
+  page.should have_content "与确认值不匹配"
 end
 
 Then /^我看到退出成功通知$$/ do
-  page.should have_content "Signed out successfully."
+  page.should have_content "退出成功."
 end
 
 Then /^我看到登录无效通知$/ do
-  page.should have_content "Invalid email or password."
+  page.should have_content "邮箱或密码错误."
 end
 
 Then /^我看更改成功的消息通知$/ do
-  page.should have_content "You updated your account successfully."
+  page.should have_content "帐号资料更新成功."
 end
 
 Then /^我应该看到我的名字$/ do
